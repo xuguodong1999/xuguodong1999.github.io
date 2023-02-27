@@ -1,0 +1,1 @@
+import{am as r}from"./index-f9f9839c.js";import"./wasm-lib/dist/wasm/wasm_xgd_chem.js";const e=()=>"",s=e,o={db:{clear:()=>{}},styles:s,renderer:r,parser:{parser:{yy:{}},parse:()=>{}},init:()=>{}};export{o as diagram};

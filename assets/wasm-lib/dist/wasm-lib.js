@@ -1,40 +1,52 @@
-var f = Object.defineProperty;
-var w = (t, s, c) => s in t ? f(t, s, { enumerable: !0, configurable: !0, writable: !0, value: c }) : t[s] = c;
-var g = (t, s, c) => (w(t, typeof s != "symbol" ? s + "" : s, c), c);
-var h = (t, s, c) => new Promise((m, v) => {
-  var d = (e) => {
+var l = Object.defineProperty;
+var p = (n, t, e) => t in n ? l(n, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : n[t] = e;
+var h = (n, t, e) => (p(n, typeof t != "symbol" ? t + "" : t, e), e);
+var g = (n, t, e) => new Promise((a, o) => {
+  var m = (c) => {
     try {
-      n(c.next(e));
-    } catch (a) {
-      v(a);
+      i(e.next(c));
+    } catch (u) {
+      o(u);
     }
-  }, l = (e) => {
+  }, r = (c) => {
     try {
-      n(c.throw(e));
-    } catch (a) {
-      v(a);
+      i(e.throw(c));
+    } catch (u) {
+      o(u);
     }
-  }, n = (e) => e.done ? m(e.value) : Promise.resolve(e.value).then(d, l);
-  n((c = c.apply(t, s)).next());
+  }, i = (c) => c.done ? a(c.value) : Promise.resolve(c.value).then(m, r);
+  i((e = e.apply(n, t)).next());
 });
-import r from "./wasm/em_xgd_chem.js";
-const i = class {
-  static smi2svg(s) {
-    return h(this, null, function* () {
-      if (i.chem === void 0) {
-        const m = yield r();
-        i.chem = new m.XgdChem();
+import D from "./wasm/wasm_xgd_chem.js";
+const s = class {
+  static smi2svg(t) {
+    return g(this, null, function* () {
+      return this.convert({
+        input: t,
+        inputFormat: "smi",
+        outputFormat: "svg",
+        gen2D: !0,
+        gen3D: !1
+      });
+    });
+  }
+  static convert(t) {
+    return g(this, null, function* () {
+      if (s.chem === void 0) {
+        const i = yield D();
+        s.chem = new i.XgdChem();
       }
-      return i.chem.smi2svg(s);
+      const { input: e, inputFormat: a, outputFormat: o, gen2D: m, gen3D: r } = t;
+      return s.chem.convert(e, a, o, m, r);
     });
   }
   static clean() {
-    var s;
-    (s = i.chem) == null || s.delete();
+    var t;
+    (t = s.chem) == null || t.delete();
   }
 };
-let o = i;
-g(o, "chem");
+let v = s;
+h(v, "chem");
 export {
-  o as XgdChemWrapper
+  v as XgdChemWrapper
 };
